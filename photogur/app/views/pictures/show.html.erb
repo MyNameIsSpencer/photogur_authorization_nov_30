@@ -1,0 +1,22 @@
+<section class="show-picture">
+  <p> <%= link_to 'Edit', edit_picture_path(@picture) %> <%= link_to 'Delete', picture_path(@picture), method: :delete, data: {confirm: "Are you sure?" } %> </p>
+  <p> <%= @picture.title %> </p>
+  <p> <%= @picture.description %> </p>
+  <%= image_tag @picture.url %>
+  <h2>Tags:</h2>
+  <ul>
+    <% @picture.tags.each do |tag| %>
+      <li> <%= tag.name %> </li>
+    <% end %>
+  </ul>
+
+  <h2>Comments:</h2>
+  <ul>
+    <% @picture.comments.each do |comment| %>
+      <li>
+        <p> On <%= comment.created_at %> <%= comment.name %> said: </p>
+        <p> <%= comment.message %> </p>
+      </li>
+    <% end %>
+  </ul>
+</section>

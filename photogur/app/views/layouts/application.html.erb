@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Photogur</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag  'http://fonts.googleapis.com/css?family=Poiret+One|Lora' %>
+  </head>
+
+  <body>
+
+    <header>
+      <h1><%= link_to 'Photogur', root_path %></h1>
+      <% flash.each do |name, msg| -%>
+      <h2>  <%= content_tag :div, msg, class: name, style:"background-color: red" %></h2>
+      <% end -%>
+      <%= link_to 'HOOOOOOOOMMMMMEE', root_path %>
+      <p class="userinfo">
+        <% if current_user %>
+          Signed in as <%= current_user.email %>. <%= link_to "Log out", session_path("current"), :method => :delete %>
+        <% else %>
+          <%= link_to 'Log Ein!', new_session_path %> or <%= link_to 'Create a NEW YOU!', new_user_path %>
+
+        <% end %>
+      </p>
+
+
+
+    </header>
+
+    <main>
+      <%= yield %>
+
+
+    </main>
+
+  </body>
+  <footer>
+    <p class="userinfo">
+      <% if current_user %>
+        Signed in as <%= current_user.email %>. <%= link_to "Log out", session_path("current"), :method => :delete %>
+      <% else %>
+        <%= link_to "Log in", new_session_path %> or <%= link_to "Sign up", new_user_path %>
+      <% end %>
+    </p>
+  </footer>
+</html>
