@@ -1,6 +1,7 @@
 class Picture < ActiveRecord::Base
   has_and_belongs_to_many :tags
   has_many :comments
+  belongs_to :user
   # Now we can do these things!
   # Picture.last.comments
   # Picture.first.comments.count
