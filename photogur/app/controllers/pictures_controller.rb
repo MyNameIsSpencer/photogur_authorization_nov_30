@@ -1,6 +1,8 @@
 class PicturesController < ApplicationController
 
   before_action :ensure_logged_in, except: [:show, :index]
+  before_action :load_picture, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_user_owns_picture, only: [:edit, :update, :destroy]
 
   def create
     @picture = Picture.new
@@ -9,12 +11,6 @@ class PicturesController < ApplicationController
     @picture.url = params[:picture][:url]
     @picture.user = current_user
 
-    # def create
-    #     @club = Club.new(
-    #       name: params[:club][:name],
-    #       description: params[:club][:description],
-    #       user: current_user
-    #     )
 
 
     if @picture.save
@@ -41,7 +37,6 @@ class PicturesController < ApplicationController
   end
 
   def update
-    @picture = Picture.find(params[:id])
     @picture.title = params[:picture][:title]
     @picture.description = params[:picture][:description]
     @picture.url = params[:picture][:url]
@@ -54,12 +49,24 @@ class PicturesController < ApplicationController
   end
 
   def destroy
-    @picture = Picture.find(params[:id])
     if @picture.destroy
       redirect_to pictures_path
     else
       render :show
     end
   end
+
+  def load_picture
+    @picture = Picture.find(params[:id])
+  end
+
+  def ensure_user_owns_picture
+    unless current_user == @picture.user
+      flash[:alert] = "Please log in"
+      redirect_to new_session_url
+    end
+  end
+
+
 
 end
