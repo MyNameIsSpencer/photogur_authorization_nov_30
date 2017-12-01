@@ -7,6 +7,15 @@ class PicturesController < ApplicationController
     @picture.title = params[:picture][:title]
     @picture.description = params[:picture][:description]
     @picture.url = params[:picture][:url]
+    @picture.user = current_user
+
+    # def create
+    #     @club = Club.new(
+    #       name: params[:club][:name],
+    #       description: params[:club][:description],
+    #       user: current_user
+    #     )
+
 
     if @picture.save
       redirect_to pictures_path
